@@ -1,67 +1,32 @@
-import { useEffect } from 'react';
-import { fetchFilteredTypes, fetchTypes } from '../../services/Pokemon';
-import Dropdown from '../../Components/Dropdown';
-import SearchBar from '../../Components/SearchBar';
-import PokeCard from '../../Components/PokeCard/PokeCard';
-import './Main.css';
-import PokeOrder from '../../Components/PokeOrder';
-import { usePokeContext } from '../../context/PokeContext';
+import { useEffect, useState} from 'react';
+import { fetchQuotes } from '../services/fetch';
 
 export default function Main() {
-  const { search, setTypes, loading, setLoading, selected, order, setPokemon, pokemon } = usePokeContext();
+const [quotes, setQuotes] = useState([]);
+const [loading, setLoading] = useState([]);
  
   useEffect(() => {
-    const fetchData = async () => {
-      const typesData = await fetchTypes(); 
-      setTypes(['all', ...typesData]);
-      
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
-      
+    const pullQuotes = async () => {
+    const info = await fetchQuotes();
+    setQuotes(info);
+    
     };
-    fetchData();
-  }, [setTypes, setLoading]);
-
+    
+    pullQuotes();
+},[]);
   
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetchFilteredTypes(selected, null, order);
-      setPokemon(data);
-    };
-    fetchData();
-  }, [selected, order, setPokemon]);
+return (
+<>
+<h3>Character Quotes</h3>
 
-  if (loading) return <div className='loader'></div>;
-   
-  const searchPokemon = async () => {
-    const data = await fetchFilteredTypes(selected, search);
-    setPokemon(data);
-  };
-
-  return (
-    <div className='bars'>
-     
-      <SearchBar 
-        // query={search}
-        // setQuery={setSearch}
-        callback={searchPokemon} />
-
-      <Dropdown 
-        // selected={selected}
-        // setSelected={setSelected}
-        // types={types}    
-
-      />
-
-      <PokeOrder />
-        
-      {pokemon.map((info) =>(
-        <div key={info.id}>
-          <PokeCard key={info.pokemon} {...info} />
-        </div>
-      ))}
+{quotes.map((quote) => (
+    <div key={quote.id}>
+     <h4>{quote.character}</h4>
+     <h4>{quote.quote}</h4>
     </div>
-  );
-  
+))}
+
+</>
+
+);
 }
