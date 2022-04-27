@@ -11,7 +11,7 @@ const [search, setSearch] = useState('');
     const pullQuotes = async () => {
     const info = await fetchQuotes();
     setQuotes(info);
-    setLoading();
+    setLoading(false);
     };
     
     pullQuotes();
