@@ -11,13 +11,14 @@ const [search, setSearch] = useState('');
     const pullQuotes = async () => {
     const info = await fetchQuotes();
     setQuotes(info);
-    // setLoading();
+    setLoading();
     };
     
     pullQuotes();
+   
 },[]);
 
-// if (loading) return <div className='loader'>...loading</div>;
+if (loading) return <div className='loader'>...loading</div>;
 
 const searchQuotes = async () => {
     const data = await fetchQuotes(search);
