@@ -5,21 +5,21 @@ import { fetchQuotes } from '../services/fetch';
 
 export default function Main() {
 const [quotes, setQuotes] = useState([]);
-// const [loading, setLoading] = useState([true]);
+const [loading, setLoading] = useState([true]);
 const [search, setSearch] = useState('');
  
   useEffect(() => {
     const pullQuotes = async () => {
     const info = await fetchQuotes();
     setQuotes(info);
-    // setLoading(false);
+    setLoading(false);
     };
     
     pullQuotes();
    
 },[]);
 
-// if (loading) return <div className='loader'>...loading</div>;
+if (loading) return <div className='loader'>...loading</div>;
 
 const searchQuotes = async () => {
     const data = await fetchQuotes(search);

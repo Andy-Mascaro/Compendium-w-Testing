@@ -10,7 +10,7 @@ const quote = {
 }
 
 describe ('App', () =>  {
-    it('Should render Fry', () => {
+    it('Fry Quote', () => {
         render(<CharacterCard quote={quote} />)
     const saying = screen.getByText('Not everyone turns out like their parents. Look at me: my parents were honest, hard-working people.');
     expect(saying).toBeInTheDocument();
